@@ -34,6 +34,44 @@ const saveDetails = (app) => {
         res.json(artistFound)
     })
 
+    app.delete('/delete_artist/:_id' , async (req , res)  =>  {
+        try{
+            const {id} = req.params  
+            const artistToDelete = await artistsSchema.deleteOne({id : _id})
+            res.send({message: "deleted", artistToDelete})
+        }catch(err){
+            console.log(err);
+            res.sendStatus(501)
+        }
+    })
+
+
+    // app.put('/update_artist/:id' , async (req ,res) =>  {
+    //     const id = req.params.id
+    //     const updateData = req.body
+    //     try{
+    //         const foundArtist = await artistsSchema({id,updateData})
+    //         res.send({message: "Updated", foundArtist})
+    //     }catch(err){
+    //         console.log(err)
+    //     }
+    // } )
+
+    app.put('/update_artist/:id', function (req, res) {
+        var id = req.id;
+            id = artistsSchema(id, req.body);
+            id.save(function(err) {
+        if (err) {
+            return res.send('/id', {
+                errors: err.errors,
+                id: id
+            });
+        } else {
+            res.json(id);
+        }   
+      })
+    });
+    
 }
 
 
