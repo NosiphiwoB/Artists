@@ -1,8 +1,11 @@
-const artistsSchema = require('../models/artistsSchema')
+const artistsSchema = require('../models/artistsSchema');
+const genreSchema = require('../models/artistsSchema')
+// const genreSchema = require('../models/genre')
+
 
 const saveDetails = (app) => {
   
-    app.post('/save_details' , async (req, res) => {
+    app.post('/save_artist' , async (req, res) => {
         let {firstname , followers , awards , age} = req.body
 
     try{
@@ -19,7 +22,7 @@ const saveDetails = (app) => {
 
     })
 
-    app.get('/get_details' , async (req, res) => {
+    app.get('/get_artist' , async (req, res) => {
         try {
             const findDetails = await artistsSchema.find()
             res.send(findDetails)
@@ -28,16 +31,16 @@ const saveDetails = (app) => {
         }
     })
 
-    app.get('/:artistsId', async (req, res) => {
+    app.get('/:artistsById', async (req, res) => {
         var artistsId = req.params.artistsId
         const artistFound = await artistsSchema.find({_id : artistsId})
         res.json(artistFound)
     })
 
-    app.delete('/delete_artist/:_id' , async (req , res)  =>  {
+    app.delete('/delete_artist/:id' , async (req , res)  =>  {
         try{
             const {id} = req.params  
-            const artistToDelete = await artistsSchema.deleteOne({id : _id})
+            const artistToDelete = await artistsSchema.deleteOne({_id : id})
             res.send({message: "deleted", artistToDelete})
         }catch(err){
             console.log(err);
@@ -45,32 +48,58 @@ const saveDetails = (app) => {
         }
     })
 
+    app.put('/update_artist/:id' , async (req ,res) =>  {
+        const id = req.params.id
+        const updateData = req.body
+        try{
+            const foundArtist = await artistsSchema({id:updateData})
+            res.send({message: "Updated", foundArtist})
+        }catch(err){
+            console.log(err)
+        }
+    } )
 
-    // app.put('/update_artist/:id' , async (req ,res) =>  {
-    //     const id = req.params.id
-    //     const updateData = req.body
-    //     try{
-    //         const foundArtist = await artistsSchema({id,updateData})
-    //         res.send({message: "Updated", foundArtist})
-    //     }catch(err){
-    //         console.log(err)
-    //     }
-    // } )
 
-    app.put('/update_artist/:id', function (req, res) {
-        var id = req.id;
-            id = artistsSchema(id, req.body);
-            id.save(function(err) {
-        if (err) {
-            return res.send('/id', {
-                errors: err.errors,
-                id: id
-            });
-        } else {
-            res.json(id);
-        }   
-      })
-    });
+
+
+    app.post('/save_genre' , async (req, res) => {
+        let { genre, artist } = req.body
+
+    try{
+        let post = new genreSchema ({
+            genre, artist
+        })
+        const postSaved = await post.save()
+         
+        res.send({massage:"Succesfully saved", postSaved})
+    }catch (error) {
+        console.error("post error", error)
+        res.send({massage:"post error"}).status(403)
+    }
+
+    })
+
+
+
+    // app.post('/save_genre' , async (req, res) => {
+    //     let artist = req.body
+    //     let genre  = req.body
+    
+    // try{
+    //     let genr = new genreSchema ({
+    //         artist,  genre
+    //     })
+    //     const postSaved = await genr.save()
+    //     console.log(postSaved) 
+    //     res.send({massage:"Succesfully saved", postSaved})
+    // }catch (error) {
+    //     console.error("post error", error)
+    //     res.send({massage:"post error"}).status(403)
+    // }
+    
+    // });
+
+    
     
 }
 

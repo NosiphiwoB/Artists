@@ -22,17 +22,4 @@ const artistsSchema = mongoose.Schema({
 )
 
 
-const genreSchema = mongoose.Schema({
-   id:{
-    type:Number,
-    require:true
-   },
-  genre:{
-    type:[String],
-    require:true
-  }
-
-})
-
-
-module.exports = mongoose.model('post', artistsSchema)
+module.exports = mongoose.model('post', artistsSchema);
