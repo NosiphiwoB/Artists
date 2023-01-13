@@ -48,18 +48,35 @@ const saveDetails = (app) => {
         }
     })
 
-    app.put('/update_artist/:id' , async (req ,res) =>  {
-        const id = req.params.id
-        const updateData = req.body
-        try{
-            const foundArtist = await artistsSchema({id:updateData})
-            res.send({message: "Updated", foundArtist})
-        }catch(err){
-            console.log(err)
+    // app.put('/update_artist/:id' , async (req ,res) =>  {
+    //     const id = req.params.id
+    //     const updateData = req.body
+    //     try{
+    //      const foundArtist =  artistsSchema.findByIdAndUpdate(id);
+    //         const foundArtist = await artistsSchema({id:updateData})
+    //         res.send({message: "Updated", foundArtist})
+    //         console.log(foundArtist)
+    //     }catch(err){
+    //         console.log(err)
+    //     }
+    // } )
+
+
+app.put("/updade_artist/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const result =  artistsSchema.findByIdAndUpdate(id, {firstname: req.body.firstname, followers: req.body.followers, awards: req.body.awards, age: req.body.age});
+        if(result){
+            res.send({message: "Updated", result})
+            console.log(result)
+            artistsSchema10.save()
+        }else{
+            res.send({message: "Not Updated"})
         }
-    } )
-
-
+    } catch (error) {
+        console.log(err)
+    }
+})
 
 
     app.post('/save_genre' , async (req, res) => {
@@ -80,25 +97,14 @@ const saveDetails = (app) => {
     })
 
 
-
-    // app.post('/save_genre' , async (req, res) => {
-    //     let artist = req.body
-    //     let genre  = req.body
-    
-    // try{
-    //     let genr = new genreSchema ({
-    //         artist,  genre
-    //     })
-    //     const postSaved = await genr.save()
-    //     console.log(postSaved) 
-    //     res.send({massage:"Succesfully saved", postSaved})
-    // }catch (error) {
-    //     console.error("post error", error)
-    //     res.send({massage:"post error"}).status(403)
-    // }
-    
-    // });
-
+    app.get('/get_genre' , async (req, res) => {
+        try {
+            const findGenres = await genreSchema.find()
+            res.send(findGenres)
+        }catch(error) {
+            console.log('error', error)
+        }
+    })
     
     
 }
