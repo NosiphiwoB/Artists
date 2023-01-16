@@ -9,10 +9,10 @@ const Display = (props) =>{
         <div id="cards" >{card.map((item) => {
             return(
                 <card key={item.id} className="card">
-                    <p >{item.firstname}</p>
-                    <p>{item.followers}</p>
-                    <p>{item.awards}</p>
-                    <p>{item.members}</p>
+                    <li >{item.firstname}</li>
+                    <li>{item.followers}</li>
+                    <li>{item.awards}</li>
+                    <li>{item.members}</li>
                     <div>
                     <button>E</button>
                     <button>X</button>

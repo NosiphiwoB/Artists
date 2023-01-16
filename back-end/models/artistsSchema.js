@@ -33,6 +33,10 @@ const genreSchema = mongoose.Schema({
 }
 )
 
+const Artist = mongoose.model('post', artistsSchema);
+const Genre = mongoose.model('genre', genreSchema);
 
-module.exports = mongoose.model('post', artistsSchema);
-module.exports = mongoose.model('genre', genreSchema);
+
+
+module.exports = {Artist, Genre}
+
