@@ -37,41 +37,11 @@
   }
 }
 
-#form {
-  border: 1px solid black;
-  width: 200px;
-  height: 200px;
-  margin:auto;
-  margin-top: 50px;
-  display: grid;
-  
-}
-.dateInput{
-display: grid;
-margin-left: 4%;
-margin-right: 4%;
-}
-
 h1 {
   margin-top: 50px;
 }
 
-nav {
-  padding:12px;
-  display: flex;
-  background-color: lightgray;
-}
-
-nav a {
-  text-decoration: none;
-}
-
-
-#add-party {
-  margin-right:10px;
-}
-
-#cards {
+.list {
   
   transition: 0.3s;
   display: grid;
@@ -79,20 +49,13 @@ nav a {
   gap: 0.1rem;
   margin: 20px;
   }
-.card{
+.display{
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); 
   width: 45%;
-  background-color: #CFB997;
+  
 }
 
 button {
   border-radius: 10px;
+  text-align: left;
 }
-
-#delete {
-  position: relative;
-  left:70px;
-  top:-156px;
-}
-
-
